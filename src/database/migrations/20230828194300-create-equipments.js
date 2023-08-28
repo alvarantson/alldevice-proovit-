@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable("Users", {
+    queryInterface.createTable("Equipments", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,14 +13,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      email: {
+      type: {
         allowNull: false,
-        unique: true,
         type: Sequelize.STRING,
       },
-      password_hash: {
+      lastMaintananceDate: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
+        defaultValue: new Date(),
+      },
+      frequencyOfMaintenanceDays: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        defaultValue: 14,
       },
       createdAt: {
         allowNull: false,
@@ -32,7 +37,7 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: new Date(),
       },
-    }),
+    }), //TODO: possible soft delete boolean
 
-  down: (queryInterface) => queryInterface.dropTable("Users"),
+  down: (queryInterface) => queryInterface.dropTable("Equipments"),
 };
