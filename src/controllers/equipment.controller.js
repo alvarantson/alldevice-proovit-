@@ -43,7 +43,6 @@ let equipmentController = {
       const equipments = await Equipment.findAll({
         where: {...{active: true}, ...req.query}
       });
-      console.log(req)
       return res.status(200).json(equipments);
     } catch (error) {
       next(error);
@@ -97,6 +96,7 @@ let equipmentController = {
       if (!equipment || !equipment?.active) throw new BadRequestError();
 
       // equipment.destroy();
+      // or this https://sequelize.org/docs/v6/core-concepts/paranoid/
       equipment.update({active: false});
 
       return res.status(200).json({ msg: "Deleted" });
@@ -107,7 +107,6 @@ let equipmentController = {
 
   dueForMaintenance: async (req, res, next) => {
     try {
-      console.log(req.query)
       let d = new Date();
       d.setDate(d.getDate() - (req.query.daysUntilDue? parseInt(req.query.daysUntilDue) : 14) )
       const equipments = await Equipment.findAll({
