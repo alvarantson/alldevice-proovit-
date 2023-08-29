@@ -6,8 +6,8 @@ import globalErrorHandler from "../middlewares/errorHandler.middleware";
   body-parser: Parse incoming request bodies in a middleware before your handlers, 
   available under the req.body property.
 */
-const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('../../swagger_output.json')
 
 const options = {
   definition: {
@@ -19,8 +19,6 @@ const options = {
   },
   apis: ['./src/routes*.js'], // TODO: not working
 };
-
-const swaggerSpec = swaggerJsdoc(options);
 
 const routeFiles = fs
   .readdirSync(__dirname + '/../routes/')
@@ -45,7 +43,7 @@ const expressService = {
       server.use(bodyParser.json());
       server.use(routes);
       server.use(globalErrorHandler);
-      server.use('', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+      server.use('', swaggerUi.serve, swaggerUi.setup(swaggerFile));
       server.listen(process.env.SERVER_PORT);
       console.log('[EXPRESS] Express initialized');
     } catch (error) {

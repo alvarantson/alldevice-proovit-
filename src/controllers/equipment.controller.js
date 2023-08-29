@@ -21,7 +21,7 @@ let equipmentController = {
 
       if (!(await equipmentSchema.isValid(req.body))) throw new ValidationError();
 
-      const { name } = req.body;
+      const { name, type, lastMaintananceDate, frequencyOfMaintenanceDays } = req.body; // unused vars for swagger-autogen
 
       const equipmentExists = await Equipment.findOne({
         where: { name },
@@ -71,7 +71,7 @@ let equipmentController = {
 
       // if (!(await equipmentSchema.isValid(req.body))) throw new ValidationError();
 
-      const { name } = req.body;
+      const { name, type, lastMaintananceDate, frequencyOfMaintenanceDays } = req.body; // unused vars for swagger-autogen
 
       if (name) {
         const equipmentExists = await Equipment.findOne({

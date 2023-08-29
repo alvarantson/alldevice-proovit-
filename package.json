@@ -6,7 +6,8 @@
   "author": "gadfaria <gadfaria@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "swagger-autogen": "node swagger.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.310.0",
@@ -21,6 +22,7 @@
     "pg": "^8.10.0",
     "sequelize": "^6.28.2",
     "sqlite3": "^5.1.6",
+    "swagger-autogen": "^2.23.5",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "uuid": "^9.0.0",
