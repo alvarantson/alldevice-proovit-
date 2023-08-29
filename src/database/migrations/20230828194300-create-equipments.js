@@ -27,6 +27,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 14,
       },
+      active: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

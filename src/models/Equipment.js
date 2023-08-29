@@ -8,6 +8,7 @@ class Equipment extends Model {
         type: Sequelize.STRING,
         lastMaintananceDate: Sequelize.DATE,
         frequencyOfMaintenanceDays: Sequelize.INTEGER,
+        active: Sequelize.BOOLEAN,
         // TODO: possibly soft delete boolean
       },
       {

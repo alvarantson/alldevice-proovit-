@@ -1,21 +1,21 @@
 # docker-compose.yml
 version: "3"
 services:
-  app:
-    restart: on-failure
-    build: .
-    depends_on:
-      - db
-    environment:
-      # DATABASE_URL: postgres://db:db@db:5432/db
-      NODE_ENV: development
-      PORT: 3000
-    ports:
-      - "3000:3000"
-    command: npm run dev
-    volumes:
-      - .:/app/
-      - /app/node_modules
+  # app:
+  #   restart: on-failure
+  #   build: .
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     # DATABASE_URL: postgres://db:db@db:5432/db #envis
+  #     NODE_ENV: development
+  #     PORT: 3000
+  #   ports:
+  #     - "3000:3000"
+  #   command: npm run dev
+  #   volumes:
+  #     - .:/app/
+  #     - /app/node_modules
 
   db:
     image: postgres:15

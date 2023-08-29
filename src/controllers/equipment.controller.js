@@ -40,7 +40,9 @@ let equipmentController = {
   query: async (req, res, next) => {
     try {
       
-      const equipments = await Equipment.findAll();
+      const equipments = await Equipment.findAll({
+        where: {...{active: true}, ...req.query}
+      });
       console.log(req)
       return res.status(200).json(equipments);
     } catch (error) {
@@ -53,7 +55,7 @@ let equipmentController = {
       const { id } = req.params;
       const equipment = await Equipment.findByPk(id);
 
-      if (!equipment) throw new BadRequestError();
+      if (!equipment || !equipment?.active) throw new BadRequestError();
 
       return res.status(200).json(equipment);
     } catch (error) {
@@ -66,9 +68,9 @@ let equipmentController = {
       const { id } = req.params;
       const equipment = await Equipment.findByPk(id);
 
-      if (!equipment) throw new BadRequestError();
+      if (!equipment || !equipment?.active) throw new BadRequestError();
 
-      if (!(await equipmentSchema.isValid(req.body))) throw new ValidationError();
+      // if (!(await equipmentSchema.isValid(req.body))) throw new ValidationError();
 
       const { name } = req.body;
 
@@ -92,9 +94,10 @@ let equipmentController = {
     try {
       const { id } = req.params;
       const equipment = await Equipment.findByPk(id);
-      if (!equipment) throw new BadRequestError();
+      if (!equipment || !equipment?.active) throw new BadRequestError();
 
-      equipment.destroy(); // TODO: possible soft delete boolean
+      // equipment.destroy();
+      equipment.update({active: false});
 
       return res.status(200).json({ msg: "Deleted" });
     } catch (error) {
@@ -104,12 +107,15 @@ let equipmentController = {
 
   dueForMaintenance: async (req, res, next) => {
     try {
-      
+      console.log(req.query)
+      let d = new Date();
+      d.setDate(d.getDate() - (req.query.daysUntilDue? parseInt(req.query.daysUntilDue) : 14) )
       const equipments = await Equipment.findAll({
         where: {
-          // lastMaintananceDate: {
-          //   [Op.lte]: new Date.now() //TODO
-          // }
+          active: true,
+          lastMaintananceDate: {
+            [Op.lte]: d
+          }
         }
       });
       return res.status(200).json(equipments);
